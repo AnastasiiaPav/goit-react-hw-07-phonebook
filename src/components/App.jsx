@@ -1,7 +1,8 @@
-import { State } from "./reviews/reviews";
+import {  Counter } from "./reviews/Reviews";
+
 
 export const App = () => {
   return (
-   <State/>
+   <Counter/>
   );
 };
