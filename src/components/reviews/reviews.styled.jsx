@@ -2,7 +2,7 @@ const { default: styled } = require("styled-components");
 
  export const Box = styled.div`
     border: dashed 1px black;
-    width: 800px;
+    width: 820px;
     border-radius: 10px;
     padding: 10px;
  `

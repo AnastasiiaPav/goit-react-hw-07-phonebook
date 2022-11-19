@@ -1,8 +1,8 @@
-import {  Counter } from "./reviews/Reviews";
+import { Reviews } from "./reviews/Reviews";
 
 
 export const App = () => {
   return (
-   <Counter/>
+   <Reviews/>
   );
 };
