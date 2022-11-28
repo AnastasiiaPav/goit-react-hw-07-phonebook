@@ -1,5 +1,5 @@
 import { Box } from './App.styled';
-import { nanoid } from "nanoid";
+
 
 const { Component } = require('react');
 
@@ -11,9 +11,9 @@ export class Form extends Component {
   };
 
   inputChange = event => {
-    const { name, value } = event.currentTarget;
+    // const { name, value } = event.currentTarget;
     this.setState({
-      [name]: value,
+      [ event.currentTarget.name]:  event.currentTarget.value,
     });
   };
 
@@ -27,17 +27,14 @@ export class Form extends Component {
     this.setState({ name: '', number: '' });
   };
 
-  nameInputId = nanoid();
-  numberInputId = nanoid()
 
   render() {
     return (
       <form onSubmit={this.formSubmit}>
         <Box>
-          <label htmlFor={this.nameInputId}>
+          <label >
             Name:{' '}
             <input
-            id={this.nameInputId}
               type="text"
               name="name"
               value={this.state.name}
@@ -47,10 +44,9 @@ export class Form extends Component {
               required
             />
           </label>
-          <label htmlFor={this.numberInputId}>
+          <label >
             Number:{' '}
             <input
-            id={this.numberInputId}
               type="tel"
               name="number"
               value={this.state.number}

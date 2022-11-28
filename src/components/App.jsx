@@ -1,20 +1,55 @@
 import { Component } from 'react';
 import { Form } from './FormApp';
+import { ContactList } from './ContactList';
+import { Filter } from './Filter';
 
 class Application extends Component {
   state = {
     contacts: [],
-    name: '',
-    number: '',
+    filter: '',
   };
 
-  dataFormSubmit = data => {
-    console.log(data);
+  filterInput = event => {
+    this.setState({
+      filter: event.target.value,
+    });
+  };
 
+
+  onFilterSearch = () => {
+    return this.state.contacts.filter(contact => {
+      return contact.name
+        .toLowerCase()
+        .includes(this.state.filter.toLowerCase());
+    });
+  };
+
+
+  deleteUser = userId => {
+    this.setState( prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.number !== userId)
+    }))
+  }
+
+  dataFormSubmit = data => {
+    const searchName = this.state.contacts.map(contact => contact.name)
+if (searchName.includes(data.name)) {
+  alert('Не получится добавить такое имя:(')
+} else{
+  this.setState({ contacts: [data, ...this.state.contacts] });
+}
   };
 
   render() {
-    return <Form onSubmit={this.dataFormSubmit} />;
+    return (
+      <div>
+        <h1>Phonebook</h1>
+        <Form onSubmit={this.dataFormSubmit} />
+        <h2>Contacts</h2>
+        <Filter onChange={this.filterInput} value={this.state.filter} />
+        <ContactList listsContact={this.onFilterSearch()}  onDelete={this.deleteUser}/>
+      </div>
+    );
   }
 }
 
