@@ -1,4 +1,5 @@
 import { Box } from './App.styled';
+import propTypes from 'prop-types';
 
 
 const { Component } = require('react');
@@ -61,4 +62,12 @@ export class Form extends Component {
       </form>
     );
   }
+}
+
+Form.propTypes = {
+  state: propTypes.object,
+  name: propTypes.string,
+  number: propTypes.number,
+  formSubmit: propTypes.func,
+  inputChange: propTypes.func,
 }
