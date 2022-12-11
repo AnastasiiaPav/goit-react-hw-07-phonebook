@@ -1,45 +1,49 @@
 import { Box } from './App.styled';
 import propTypes from 'prop-types';
+import { useState } from 'react';
 
 
-const { Component } = require('react');
+export const  Form = ({onSubmit}) => {
+  const [ name, setName] = useState('')
+  const [ number, setNumber] = useState('')
 
+const  inputChange = event => {
+  switch (event.target.name) {
+    case 'name':
+      setName(event.target.value);
+      break;
 
-export class Form extends Component {
-  state = {
-    name: '',
-    number: '',
+    case 'number':
+      setNumber(event.target.value);
+      break;
+
+    default: break
+  }
   };
 
-  inputChange = event => {
-    // const { name, value } = event.currentTarget;
-    this.setState({
-      [ event.currentTarget.name]:  event.currentTarget.value,
-    });
-  };
-
-  formSubmit = event => {
+ const formSubmit = event => {
     event.preventDefault();
-    this.props.onSubmit(this.state);
-    this.reset();
+   onSubmit({name, number});
+  reset();
   };
 
-  reset = () => {
-    this.setState({ name: '', number: '' });
+ const reset = () => {
+   setName('')
+   setNumber('')
   };
 
 
-  render() {
+ 
     return (
-      <form onSubmit={this.formSubmit}>
+      <form onSubmit={formSubmit}>
         <Box>
           <label >
             Name:{' '}
             <input
               type="text"
               name="name"
-              value={this.state.name}
-              onChange={this.inputChange}
+              value={name}
+              onChange={inputChange}
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
@@ -50,8 +54,8 @@ export class Form extends Component {
             <input
               type="tel"
               name="number"
-              value={this.state.number}
-              onChange={this.inputChange}
+              value={number}
+              onChange={inputChange}
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
@@ -62,7 +66,7 @@ export class Form extends Component {
       </form>
     );
   }
-}
+
 
 Form.propTypes = {
   state: propTypes.object,
