@@ -35,9 +35,11 @@ export const App = () => {
 
     if (searchName.includes(data.name)) {
       alert(`${data.name} уже есть в Вашем списке контактов`);
+      return
     }
     if (searchNumber.includes(data.number)) {
       alert(`В Вашем списке контактов уже есть номер ${data.number}`);
+      return
     }
     dispatch(add(data));
   };
