@@ -1,11 +1,15 @@
 import { Box } from './App.styled';
 import propTypes from 'prop-types';
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { AddThunk } from 'Redux/contactsActions';
 
 
-export const  Form = ({onSubmit}) => {
+export const  Form = () => {
+  const contacts = useSelector(state => state.contacts.items);
+  const dispatch = useDispatch();
   const [ name, setName] = useState('')
-  const [ phone, setPhone] = useState('')
+  const [ number, setNumber] = useState('')
 
 const  inputChange = event => {
   switch (event.target.name) {
@@ -14,7 +18,7 @@ const  inputChange = event => {
       break;
 
     case 'number':
-      setPhone(event.target.value);
+      setNumber(event.target.value);
       break;
 
     default: break
@@ -23,19 +27,32 @@ const  inputChange = event => {
 
  const formSubmit = event => {
     event.preventDefault();
-   onSubmit({name, phone});
+   onSubmit({name, number});
   reset();
   };
 
  const reset = () => {
    setName('')
-   setPhone('')
+   setNumber('')
   };
 
+  const onSubmit = ({ ...data }) => {
+    const searchName = contacts.map(contact => contact.name);
+    const searchNumber = contacts.map(contact => contact.number);
 
+    if (searchName.includes(data.name)) {
+      alert(`${data.name} уже есть в Вашем списке контактов`);
+      return
+    }
+    if (searchNumber.includes(data.number)) {
+      alert(`В Вашем списке контактов уже есть номер ${data.number}`);
+      return
+    }
+    dispatch(AddThunk(data));
+  };
  
     return (
-      <form onSubmit={formSubmit}>
+      <form onSubmit={formSubmit} >
         <Box>
           <label >
             Name:{' '}
@@ -54,7 +71,7 @@ const  inputChange = event => {
             <input
               type="tel"
               name="number"
-              value={phone}
+              value={number}
               onChange={inputChange}
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"

@@ -1,7 +1,15 @@
 import PropTypes from 'prop-types';
 import { ContactListItem } from './ContactListItem';
+import { useDispatch } from 'react-redux';
+import { deleteThunk } from 'Redux/contactsActions';
 
-export const ContactList = ({ contacts, deleteContact }) => {
+
+export const ContactList = ({ contacts }) => {
+  const dispatch = useDispatch();
+
+  const deleteUser = userId => {
+    dispatch(deleteThunk(userId));
+  };
   return (
     <ul>
       {contacts &&
@@ -11,7 +19,7 @@ export const ContactList = ({ contacts, deleteContact }) => {
               <ContactListItem
                 name={name}
                 number={phone}
-                deleteContact={deleteContact}
+                deleteContact={deleteUser}
                 id={id}
               />
             </li>
